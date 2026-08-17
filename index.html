@@ -3,37 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Saad Kashif — Systems Architect</title>
-<meta name="description" content="Saad Kashif — Ultra-Performance Systems Architect. High-concurrency engines, zero-latency network protocols.">
-<meta name="theme-color" content="#ffffff">
+<title>Saad Kashif | Portfolio</title>
+<meta name="theme-color" content="#121212">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3Ctext x='50' y='68' font-size='50' fill='%23fff' text-anchor='middle' font-family='sans-serif' font-weight='bold'%3ES%3C/text%3E%3C/svg%3E">
+<!-- Google Fonts for Editorial Dark Mode Look -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Premium, friendly font choice -->
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-<!-- Three.js (CDN) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg-color: #F7F9FC;
-    --text-main: #111827;
-    --text-muted: #6B7280;
+    --bg-dark: #0f0f0f;
+    --bg-card: #1a1a1a;
+    --text-light: #F4F4F0;
+    --text-muted: #888888;
     
-    --gradient-warm: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-    --gradient-cool: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
-    --gradient-jolly: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+    /* The vibrant accent color inspired by the reference image's warm tones */
+    --accent: #FF5E00; 
+    --accent-hover: #FF7A2E;
     
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --card-border: rgba(255, 255, 255, 0.5);
-    
-    --font-main: 'Plus Jakarta Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-
-    --radius: 24px;
-    --max-w: 1200px;
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -41,447 +31,470 @@
 
   body {
     margin: 0;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    font-family: var(--font-main);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-body);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
-  ::selection { background: #FF6B6B; color: #fff; }
-  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--accent); color: #fff; }
+  a { color: inherit; text-decoration: none; transition: color 0.3s; }
+  a:hover { color: var(--accent); }
 
   /* ---------------------------------------------------
-     3D BACKGROUND (SOFT PREMIUM VIBE)
+     NAVIGATION
   --------------------------------------------------- */
-  #webgl-canvas {
-    position: fixed; inset: 0; z-index: -1;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    opacity: 0.8;
-  }
-
-  /* ---------------------------------------------------
-     NAVIGATION / HEADER
-  --------------------------------------------------- */
-  header.navbar {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 5%;
-    background: rgba(247, 249, 252, 0.6);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.4);
-  }
-
-  .logo {
-    font-weight: 800; font-size: 1.2rem; letter-spacing: -0.03em;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .logo-dot {
-    width: 12px; height: 12px; border-radius: 50%;
-    background: var(--gradient-warm);
-    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
-  }
-
-  .nav-status {
-    display: flex; align-items: center; gap: 1rem;
-    font-size: 0.9rem; font-weight: 600; color: var(--text-muted);
-  }
-  .live-badge {
-    padding: 4px 12px; background: rgba(79, 172, 254, 0.1);
-    color: #0084FF; border-radius: 20px; font-size: 0.8rem;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .live-dot {
-    width: 6px; height: 6px; background: #0084FF; border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0.4); }
-    70% { box-shadow: 0 0 0 6px rgba(0, 132, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 132, 255, 0); }
-  }
-
-  /* ---------------------------------------------------
-     MAIN LAYOUT
-  --------------------------------------------------- */
-  main {
-    max-width: var(--max-w);
-    margin: 8rem auto 4rem;
-    padding: 0 2rem;
+  nav {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .nav-logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .nav-logo::before {
+    content: "✦";
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
     gap: 2rem;
-  }
-
-  /* ---------------------------------------------------
-     HERO SECTION
-  --------------------------------------------------- */
-  .hero {
-    text-align: center;
-    padding: 4rem 0 2rem;
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-greeting {
-    font-size: 1.1rem; font-weight: 700; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.1em;
-    margin-bottom: 1rem; display: inline-block;
-  }
-
-  .hero h1 {
-    font-size: clamp(3rem, 7vw, 5rem);
-    font-weight: 800; line-height: 1.1; letter-spacing: -0.04em;
-    margin: 0 0 1.5rem; color: var(--text-main);
-  }
-  .gradient-text {
-    background: var(--gradient-warm);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-  }
-
-  .hero p {
-    font-size: 1.25rem; color: var(--text-muted);
-    max-width: 600px; margin: 0 auto 2.5rem;
+    align-items: center;
+    font-size: 0.9rem;
     font-weight: 500;
   }
 
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 1rem 2rem; font-size: 1rem; font-weight: 700;
-    border-radius: 50px; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    gap: 8px; border: none;
+  .btn-accent {
+    background: var(--accent);
+    color: #0f0f0f;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: transform 0.3s, background 0.3s;
   }
-  .btn-primary {
-    background: var(--text-main); color: #fff;
-    box-shadow: 0 10px 20px rgba(17, 24, 39, 0.15);
-  }
-  .btn-primary:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(17, 24, 39, 0.25);
-  }
-  .btn-secondary {
-    background: #fff; color: var(--text-main);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-  }
-  .btn-secondary:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  .btn-accent:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    color: #0f0f0f;
   }
 
   /* ---------------------------------------------------
-     BENTO GRID (CARDS)
+     HERO EDITORIAL TYPOGRAPHY
   --------------------------------------------------- */
-  .bento-grid {
+  .hero {
+    position: relative;
+    max-width: 1400px;
+    margin: 4rem auto;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+  }
+
+  .hero-text-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .huge-text {
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.85;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--text-light);
+  }
+
+  .outline-accent {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent);
+  }
+
+  .social-floater {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  /* ---------------------------------------------------
+     MAIN GRID (ABOUT & INFO)
+  --------------------------------------------------- */
+  .main-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto 6rem;
+    padding: 0 5%;
+  }
+
+  @media (max-width: 900px) {
+    .main-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  /* Left Column: About */
+  .about-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 90%;
+    margin-bottom: 2rem;
+  }
+
+  .btn-outline {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+  }
+  .btn-outline:hover {
+    background: var(--accent);
+    color: #0f0f0f;
+  }
+
+  /* Right Column: Abstract Graphic replacing the photo */
+  .graphic-container {
+    background: var(--bg-card);
+    border-radius: 200px 200px 0 0;
+    padding: 4rem 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+  }
+
+  .graphic-circle {
+    width: 180px;
+    height: 180px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: #0f0f0f;
+    margin-bottom: 2rem;
+  }
+
+  .pill {
+    background: var(--accent);
+    color: #0f0f0f;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    position: absolute;
+  }
+  .pill-1 { top: 20%; left: -5%; }
+  .pill-2 { bottom: 30%; right: -5%; }
+
+  .contact-box {
+    background: #000;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    width: 110%;
+    transform: translateY(2rem);
+    border: 1px solid #333;
+  }
+  .contact-box h3 {
+    font-family: var(--font-heading);
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  /* ---------------------------------------------------
+     LOWER GRID (EXPERIENCE & SKILLS)
+  --------------------------------------------------- */
+  .lower-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 6rem;
+    padding: 0 5%;
+  }
+
+  @media (max-width: 900px) {
+    .lower-grid { grid-template-columns: 1fr; }
+  }
+
+  /* The Orange Block (Mimicking the reference image's yellow block) */
+  .block-accent {
+    background: var(--accent);
+    color: #0f0f0f;
+    padding: 3rem;
+    border-radius: 16px;
+  }
+  .block-accent h2 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    margin: 0 0 2rem;
+    letter-spacing: -0.03em;
   }
   
-  .card {
-    background: var(--card-bg);
-    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.6);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
-    display: flex; flex-direction: column; justify-content: center;
+  .timeline-item {
+    margin-bottom: 2rem;
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid #0f0f0f;
   }
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(255,255,255,0.8);
+  .timeline-item::before {
+    content: "✦";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    background: var(--accent);
+    color: #0f0f0f;
+    font-size: 1.2rem;
+    line-height: 1;
   }
+  .time-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 0.2rem; }
+  .time-desc { font-size: 0.9rem; font-weight: 500; opacity: 0.8; }
 
-  /* Metrics Styling */
-  .metric-header {
-    font-size: 0.9rem; font-weight: 700; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  .tag-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
   }
-  .metric-value {
-    font-size: 2.5rem; font-weight: 800; color: var(--text-main);
-    display: flex; align-items: baseline; gap: 4px;
-  }
-  .metric-unit { font-size: 1rem; color: var(--text-muted); font-weight: 600; }
-  .chart-canvas { width: 100%; height: 60px; margin-top: 1rem; }
-
-  /* Projects Styling */
-  .col-span-2 { grid-column: span 2; }
-  @media (max-width: 900px) { .col-span-2 { grid-column: span 1; } }
-
-  .project-title {
-    font-size: 1.5rem; font-weight: 800; margin: 0 0 0.5rem;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .project-desc {
-    color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1.5rem;
-  }
-  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
   .tag {
-    background: rgba(0,0,0,0.04); color: var(--text-main);
-    padding: 6px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+    background: #0f0f0f;
+    color: var(--text-light);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
   }
 
-  /* ---------------------------------------------------
-     FOOTER
-  --------------------------------------------------- */
-  footer {
-    text-align: center; padding: 4rem 2rem; color: var(--text-muted);
-    font-weight: 600; font-size: 0.95rem;
+  /* Skills Block */
+  .block-dark {
+    background: var(--bg-card);
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px solid #333;
   }
-  footer span { color: var(--text-main); font-weight: 800; }
+  .block-dark h2 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    margin: 0 0 2rem;
+    color: var(--accent);
+  }
+
+  .skills-flex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .skill-col h4 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+  }
+  
+  .software-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .sq-icon {
+    border: 1px solid var(--text-muted);
+    padding: 0.8rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.85rem;
+  }
+
+  .coding-list p { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
 </style>
 </head>
 <body>
 
-  <!-- Premium 3D Background -->
-  <canvas id="webgl-canvas"></canvas>
-
-  <!-- Sleek Header -->
-  <header class="navbar">
-    <div class="logo">
-      <div class="logo-dot"></div>
-      Saad Kashif
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">Saad Kashif</div>
+    <div class="nav-links">
+      <a href="#about">About me</a>
+      <a href="#work">Work</a>
+      <a href="#contact" class="btn-accent">Get in touch!</a>
     </div>
-    <div class="nav-status">
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        System Online
-      </div>
-      <span id="clock" style="font-family: var(--font-mono);">00:00:00</span>
+  </nav>
+
+  <!-- Editorial Typography Hero -->
+  <header class="hero">
+    <div class="hero-text-block">
+      <h1 class="huge-text outline">SYSTEMS</h1>
+      <h1 class="huge-text">ARCHITECT</h1>
+      <h1 class="huge-text outline-accent">ENGINEER</h1>
+    </div>
+    
+    <div class="social-floater">
+      <span>IG: @tcqur</span>
+      <span>RBX: 9qver</span>
+      <span>LOC: Ajman</span>
     </div>
   </header>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <span class="hero-greeting">👋 Hello, world</span>
-      <h1>I engineer <span class="gradient-text">Ultra-Systems</span></h1>
-      <p>Architecting high-concurrency engines, zero-latency protocols, and beautiful experiences that just work.</p>
-      <div style="display:flex; justify-content:center; gap: 1rem; flex-wrap: wrap;">
-        <a href="#projects" class="btn btn-primary">Explore Deployments</a>
-        <a href="https://instagram.com/tcqur" target="_blank" class="btn btn-secondary">Say Hello</a>
-      </div>
-    </section>
+  <!-- About & Contact Grid -->
+  <section class="main-grid" id="about">
+    <!-- Left Column -->
+    <div>
+      <h2 class="about-title">Hello,<br>I'm Saad !</h2>
+      <p class="about-text">
+        I am a high-performance systems architect specializing in ultra-low latency bot engines, zero-overhead client interfaces, and real-time network infrastructure. I approach complex backend problems in a pragmatic way, seeking the most functional and hyper-optimized solutions possible.
+      </p>
+      <a href="https://instagram.com/tcqur" target="_blank" class="btn-outline">Say Hello ↗</a>
+    </div>
 
-    <!-- Bento Grid for Telemetry -->
-    <section class="bento-grid">
-      <!-- Metric 1 -->
-      <div class="card">
-        <div class="metric-header">System Uptime</div>
-        <div class="metric-value">99.99<span class="metric-unit">%</span></div>
-        <canvas class="chart-canvas" id="chart-http"></canvas>
-      </div>
-      
-      <!-- Metric 2 -->
-      <div class="card">
-        <div class="metric-header">WebSocket Latency</div>
-        <div class="metric-value">8.2<span class="metric-unit">ms</span></div>
-        <canvas class="chart-canvas" id="chart-latency"></canvas>
-      </div>
-
-      <!-- Metric 3 -->
-      <div class="card">
-        <div class="metric-header">Active Scanners</div>
-        <div class="metric-value" style="color: #FF6B6B;">2,048</div>
-        <div style="margin-top: 1rem; height: 60px; background: var(--gradient-jolly); border-radius: 12px; opacity: 0.8;"></div>
-      </div>
-    </section>
-
-    <!-- Bento Grid for Projects -->
-    <section class="bento-grid" id="projects">
-      <!-- Project 1 -->
-      <a href="https://e12.lovable.app" target="_blank" class="card col-span-2" style="background: linear-gradient(to bottom right, rgba(255,255,255,0.9), rgba(255,255,255,0.5));">
-        <h3 class="project-title">e12 Automation Framework ↗</h3>
-        <p class="project-desc">High-efficiency automation framework engineered for rapid throughput and zero-latency execution. A seamless blend of power and design.</p>
-        <div class="tags">
-          <span class="tag">Automation</span>
-          <span class="tag">WebSockets</span>
-          <span class="tag">Low-Latency</span>
+    <!-- Right Column (Replaced Girl with Abstract Monogram Container) -->
+    <div style="display: flex; justify-content: center; position: relative;">
+      <div class="graphic-container">
+        
+        <div class="pill pill-1">June 7, 1981</div>
+        <div class="pill pill-2">Ajman, UAE</div>
+        
+        <div class="graphic-circle">SK</div>
+        
+        <div class="contact-box" id="contact">
+          <h3>Contact</h3>
+          <div class="contact-item">
+            <span>📍</span> Ajman / Dubai, United Arab Emirates
+          </div>
+          <div class="contact-item">
+            <span>🔗</span> github.com/saadkashif
+          </div>
+          <div class="contact-item">
+            <span>✉️</span> Inquire via IG: @tcqur
+          </div>
         </div>
-      </a>
 
-      <!-- Project 2 -->
-      <a href="https://www.usersniper.com/" target="_blank" class="card col-span-2">
-        <h3 class="project-title">UserSniper ↗</h3>
-        <p class="project-desc">Real-time high-concurrency availability scanner checking target handles across Discord, Roblox, Minecraft & social platforms simultaneously.</p>
-        <div class="tags">
-          <span class="tag">Async I/O</span>
-          <span class="tag">API Pipeline</span>
-          <span class="tag">Multi-Threaded</span>
-        </div>
-      </a>
-    </section>
-  </main>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    Designed & Engineered by <span>Saad Kashif</span> &copy; <span id="year"></span> <br>
-    <span style="font-size: 0.85rem; font-weight: 500; color: #9CA3AF; margin-top: 8px; display: inline-block;">All Rights Reserved</span>
-  </footer>
-
-<script>
-(function() {
-  "use strict";
-
-  // Clock Update
-  document.getElementById('year').textContent = new Date().getFullYear();
-  const clockEl = document.getElementById('clock');
-  function updateClock() {
-    const now = new Date();
-    clockEl.textContent = now.toTimeString().split(' ')[0];
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // ---------------------------------------------------
-  // PREMIUM 3D BACKGROUND (Soft Floating Orbs)
-  // ---------------------------------------------------
-  let scene, camera, renderer, particles;
-  function initThree() {
-    const container = document.getElementById('webgl-canvas');
-    scene = new THREE.Scene();
+  <!-- Experience & Skills Grid -->
+  <section class="lower-grid" id="work">
     
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 200;
-
-    renderer = new THREE.WebGLRenderer({ canvas: container, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Create soft, jolly colored particles
-    const geometry = new THREE.BufferGeometry();
-    const particleCount = 400;
-    const posArray = new Float32Array(particleCount * 3);
-    const colorsArray = new Float32Array(particleCount * 3);
-
-    const color1 = new THREE.Color('#FF6B6B'); // Warm Red/Pink
-    const color2 = new THREE.Color('#FFD93D'); // Jolly Yellow
-    const color3 = new THREE.Color('#4FACFE'); // Bright Blue
-
-    for(let i = 0; i < particleCount * 3; i+=3) {
-      // Sphere distribution
-      const r = 150 + Math.random() * 100;
-      const theta = 2 * Math.PI * Math.random();
-      const phi = Math.acos(2 * Math.random() - 1);
+    <!-- Experience Block (Orange Theme) -->
+    <div class="block-accent">
+      <h2>Deployments</h2>
       
-      posArray[i] = r * Math.sin(phi) * Math.cos(theta);
-      posArray[i+1] = r * Math.sin(phi) * Math.sin(theta);
-      posArray[i+2] = r * Math.cos(phi);
+      <div class="timeline-item">
+        <div class="time-title">e12 Automation Framework</div>
+        <div class="time-desc">High-efficiency retro terminal social automation framework engineered for rapid throughput and zero-latency execution.</div>
+        <div class="tag-container">
+          <span class="tag">#WebSockets</span>
+          <span class="tag">#LowLatency</span>
+        </div>
+      </div>
 
-      // Random color mix
-      const mix = Math.random();
-      let c = color1.clone();
-      if(mix > 0.66) c = color2.clone();
-      else if(mix > 0.33) c = color3.clone();
+      <div class="timeline-item">
+        <div class="time-title">UserSniper System</div>
+        <div class="time-desc">Real-time high-concurrency availability scanner checking target handles across Discord, Roblox, Minecraft & social platforms.</div>
+        <div class="tag-container">
+          <span class="tag">#AsyncIO</span>
+          <span class="tag">#MultiThreaded</span>
+        </div>
+      </div>
 
-      colorsArray[i] = c.r;
-      colorsArray[i+1] = c.g;
-      colorsArray[i+2] = c.b;
-    }
+    </div>
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
+    <!-- Skills Block (Dark Theme) -->
+    <div class="block-dark">
+      <h2 style="font-size: 2.5rem;" class="outline">TECHNICAL<br>SKILLS</h2>
+      
+      <div class="skills-flex">
+        <div class="skill-col">
+          <h4>Environments</h4>
+          <div class="software-grid">
+            <div class="sq-icon">Google Cloud</div>
+            <div class="sq-icon">GitHub</div>
+            <div class="sq-icon">Replit</div>
+            <div class="sq-icon">TryHackMe</div>
+          </div>
+        </div>
 
-    // Create a soft glowing material
-    const material = new THREE.PointsMaterial({
-      size: 4,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending
-    });
+        <div class="skill-col">
+          <h4>Core Focus</h4>
+          <div class="coding-list">
+            <p>High-Concurrency</p>
+            <p>API Pipelines</p>
+            <p>Burp Suite / Security</p>
+            <p>System Architecture</p>
+          </div>
+        </div>
+      </div>
 
-    particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+      <div style="margin-top: 3rem;">
+        <h4 style="font-family: var(--font-heading); margin-bottom: 1rem;">Hobbies & Interests</h4>
+        <div class="coding-list" style="display: flex; gap: 2rem;">
+          <div>
+            <span style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent);">📷</span>
+            <p style="font-size: 0.8rem;">Photography<br>& Urban Exploration</p>
+          </div>
+          <div>
+            <span style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent);">🔐</span>
+            <p style="font-size: 0.8rem;">Cybersecurity<br>Missions</p>
+          </div>
+          <div>
+            <span style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent);">🌍</span>
+            <p style="font-size: 0.8rem;">Travel<br>(UAE & Pakistan)</p>
+          </div>
+        </div>
+      </div>
 
-    animateThree();
-  }
+    </div>
+  </section>
 
-  function animateThree() {
-    requestAnimationFrame(animateThree);
-    particles.rotation.y += 0.001;
-    particles.rotation.x += 0.0005;
-    renderer.render(scene, camera);
-  }
-
-  window.addEventListener('resize', () => {
-    if(camera && renderer) {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-  });
-
-  initThree();
-
-  // ---------------------------------------------------
-  // SMOOTH CHART DRAWING
-  // ---------------------------------------------------
-  function drawSmoothChart(canvasId, colorStr) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    
-    // Fit to container
-    const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
-    canvas.width = width * window.devicePixelRatio;
-    canvas.height = height * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    // Generate random smooth data points
-    const points = [];
-    let prev = height / 2;
-    for(let i=0; i<=10; i++) {
-      points.push({ x: (width / 10) * i, y: prev });
-      prev += (Math.random() - 0.5) * 20;
-      if(prev < 5) prev = 5;
-      if(prev > height - 5) prev = height - 5;
-    }
-
-    // Draw Line
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let i = 0; i < points.length - 1; i++) {
-      const x_mid = (points[i].x + points[i+1].x) / 2;
-      const y_mid = (points[i].y + points[i+1].y) / 2;
-      const cp_x1 = (x_mid + points[i].x) / 2;
-      const cp_x2 = (x_mid + points[i+1].x) / 2;
-      ctx.quadraticCurveTo(cp_x1, points[i].y, x_mid, y_mid);
-      ctx.quadraticCurveTo(cp_x2, points[i+1].y, points[i+1].x, points[i+1].y);
-    }
-    
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = colorStr;
-    ctx.stroke();
-
-    // Fill Gradient under line
-    const grad = ctx.createLinearGradient(0, 0, 0, height);
-    grad.addColorStop(0, colorStr + '66'); // 40% opacity
-    grad.addColorStop(1, colorStr + '00'); // 0% opacity
-    
-    ctx.lineTo(width, height);
-    ctx.lineTo(0, height);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-  }
-
-  // Draw charts initially and on resize
-  function initCharts() {
-    drawSmoothChart('chart-http', '#FF6B6B');
-    drawSmoothChart('chart-latency', '#4FACFE');
-  }
-  setTimeout(initCharts, 100);
-  window.addEventListener('resize', initCharts);
-
-})();
-</script>
 </body>
 </html>
