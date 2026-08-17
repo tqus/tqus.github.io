@@ -43,7 +43,7 @@
     --radius: 6px;
   }
 
-  /* Themes Dynamic Swapping */
+  /* Dynamic Themes */
   [data-theme="cyber"] {
     --green: #ff007f;
     --green-glow: rgba(255, 0, 127, 0.4);
@@ -248,7 +248,7 @@
     text-shadow: 0 0 30px var(--green-glow);
   }
   
-  /* Advanced Glitch Effect */
+  /* Glitch Effect */
   .glitch-text { position: relative; }
   .glitch-text::before, .glitch-text::after {
     content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -576,7 +576,26 @@
   updateClock();
 
   /* ---------------------------------------------------
-     2. BOOT SEQUENCE SIMULATOR
+     2. HYPER-FAST ADDRESS BAR PATH SCRAMBLER
+  --------------------------------------------------- */
+  const routeChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  function randPath(len) {
+    let s = '/';
+    for (let i = 0; i < len; i++) {
+      s += routeChars[Math.floor(Math.random() * routeChars.length)];
+    }
+    return s;
+  }
+  if (!isReducedMotion && window.history && window.history.replaceState) {
+    setInterval(() => {
+      try {
+        window.history.replaceState(null, '', randPath(3 + Math.floor(Math.random() * 3)));
+      } catch (e) { /* silent fail if browser limits history writes */ }
+    }, 16); // ~60fps refresh rate
+  }
+
+  /* ---------------------------------------------------
+     3. BOOT SEQUENCE SIMULATOR
   --------------------------------------------------- */
   const bootLogs = [
     "> INITIATING_CORE_KERNEL...",
@@ -611,7 +630,7 @@
   }
 
   /* ---------------------------------------------------
-     3. HIGH-PERFORMANCE MATRIX RAIN CANVAS
+     4. HIGH-PERFORMANCE MATRIX RAIN CANVAS
   --------------------------------------------------- */
   const canvas = document.getElementById('canvas-matrix');
   const ctx = canvas.getContext('2d');
@@ -652,7 +671,7 @@
   let matrixTimer = setInterval(renderMatrix, matrixSpeed);
 
   /* ---------------------------------------------------
-     4. INTERACTIVE CUSTOM CURSOR
+     5. INTERACTIVE CUSTOM CURSOR
   --------------------------------------------------- */
   if (window.matchMedia('(pointer: fine)').matches && !isReducedMotion) {
     const dot = document.querySelector('.cursor-dot');
@@ -682,7 +701,7 @@
   }
 
   /* ---------------------------------------------------
-     5. TYPEWRITER EFFECT
+     6. TYPEWRITER EFFECT
   --------------------------------------------------- */
   const phrases = [
     "Software Engineer & Systems Designer",
@@ -716,7 +735,7 @@
   else typeTarget.textContent = phrases[0];
 
   /* ---------------------------------------------------
-     6. TEXT SCRAMBLE ON HOVER
+     7. TEXT SCRAMBLE ON HOVER
   --------------------------------------------------- */
   const scrambleChars = '!<>-_\\/[]{}=+*^?#________';
   document.querySelectorAll('.scramble-btn').forEach(btn => {
@@ -741,7 +760,7 @@
   });
 
   /* ---------------------------------------------------
-     7. CLI INTERACTIVE SHELL ENGINE
+     8. CLI INTERACTIVE SHELL ENGINE
   --------------------------------------------------- */
   const cliInput = document.getElementById('cli-input');
   const cliOutput = document.getElementById('cli-output');
@@ -760,13 +779,11 @@
       const val = cliInput.value.trim().toLowerCase();
       if (!val) return;
 
-      // Echo User Line
       const userLine = document.createElement('div');
       userLine.className = 'cli-line';
       userLine.innerHTML = `<span style="color:var(--green)">❯</span> ${val}`;
       cliOutput.appendChild(userLine);
 
-      // Process Command
       if (val === 'clear') {
         cliOutput.innerHTML = '';
       } else if (val.startsWith('theme')) {
@@ -796,9 +813,8 @@
   }
 
   /* ---------------------------------------------------
-     8. TOP BAR CONTROLS
+     9. TOP BAR CONTROLS
   --------------------------------------------------- */
-  // Red Button -> Cycles Themes
   const themes = ['', 'cyber', 'amber'];
   let currentThemeIdx = 0;
   document.getElementById('btn-close').addEventListener('click', () => {
@@ -806,12 +822,10 @@
     document.documentElement.setAttribute('data-theme', themes[currentThemeIdx]);
   });
 
-  // Yellow Button -> Clear CLI
   document.getElementById('btn-min').addEventListener('click', () => {
     cliOutput.innerHTML = '<div class="cli-line sys">CLI Terminal reset.</div>';
   });
 
-  // Green Button -> Turbo Matrix Speed
   document.getElementById('btn-max').addEventListener('click', () => {
     clearInterval(matrixTimer);
     matrixSpeed = matrixSpeed === 33 ? 12 : 33;
@@ -819,7 +833,7 @@
   });
 
   /* ---------------------------------------------------
-     9. SCROLL REVEAL OBSERVER
+     10. SCROLL REVEAL OBSERVER
   --------------------------------------------------- */
   const blocks = document.querySelectorAll('.term-block');
   if ('IntersectionObserver' in window) {
