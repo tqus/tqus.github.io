@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Saad Kashif — Software Engineer</title>
+<title>Saad Kashif — idk something..,</title>
 <meta name="description" content="Saad Kashif — software engineer. Projects, work, and contact.">
 <meta name="theme-color" content="#060706">
 
@@ -69,7 +69,7 @@
   #matrix{
     position:fixed; inset:0; z-index:0;
     width:100%; height:100%;
-    opacity:.5;
+    opacity:.32;
   }
 
   .crt-overlay{
@@ -156,14 +156,26 @@
     padding:0 1.5rem;
   }
 
+  .panel{
+    background:rgba(9,12,10,.72);
+    backdrop-filter:blur(10px);
+    border-left:1px solid var(--border);
+    border-right:1px solid var(--border);
+    box-shadow:0 40px 100px -40px rgba(0,0,0,.7);
+  }
+
   .term-block{
-    padding:5rem 0;
+    padding:4.5rem 2.25rem;
     border-bottom:1px solid var(--border);
     opacity:0; transform:translateY(18px);
     transition:opacity .7s ease, transform .7s ease;
   }
   .term-block.in-view{ opacity:1; transform:translateY(0); }
   .term-block:last-of-type{ border-bottom:none; }
+
+  @media (max-width:640px){
+    .term-block{ padding:3.25rem 1.25rem; }
+  }
 
   .prompt{
     font-family:var(--font-display);
@@ -181,6 +193,7 @@
     letter-spacing:-.01em;
     color:var(--text);
     line-height:1;
+    text-shadow:0 0 40px rgba(57,255,136,.18);
   }
   .glitch::before,.glitch::after{
     content:attr(data-text);
@@ -227,16 +240,16 @@
 
   .cta-row{ display:flex; gap:1rem; flex-wrap:wrap; }
   .btn{
-    font-family:var(--font-display); font-size:.85rem;
-    padding:.85rem 1.4rem; border:1px solid var(--green);
-    color:var(--green); position:relative;
-    transition:background .2s ease, color .2s ease;
+    font-family:var(--font-display); font-size:.85rem; font-weight:500;
+    padding:.85rem 1.5rem; border:1px solid var(--green);
+    background:var(--green); color:#031006; position:relative;
+    transition:background .2s ease, color .2s ease, box-shadow .2s ease, transform .15s ease;
   }
-  .btn::before{ content:"["; margin-right:.4em; opacity:.6; }
-  .btn::after{ content:"]"; margin-left:.4em; opacity:.6; }
-  .btn:hover{ background:var(--green); color:#031006; }
-  .btn-ghost{ border-color:var(--border); color:var(--text-dim); }
-  .btn-ghost:hover{ background:transparent; color:var(--red); border-color:var(--red); }
+  .btn::before{ content:"["; margin-right:.4em; opacity:.5; }
+  .btn::after{ content:"]"; margin-left:.4em; opacity:.5; }
+  .btn:hover{ box-shadow:0 0 24px rgba(57,255,136,.35); transform:translateY(-1px); }
+  .btn-ghost{ background:transparent; border-color:var(--border); color:var(--text-dim); }
+  .btn-ghost:hover{ color:var(--red); border-color:var(--red); box-shadow:0 0 24px rgba(255,59,78,.2); }
 
   /* ---- about ---- */
   #about p{ max-width:60ch; color:var(--text); font-size:1rem; }
@@ -247,15 +260,23 @@
   .proj-row{
     display:grid;
     grid-template-columns:1fr auto;
-    gap:.35rem 1.5rem;
-    padding:1.4rem 0;
+    gap:.4rem 1.5rem;
+    padding:1.5rem 1.25rem;
+    margin:0 -1.25rem;
     border-top:1px solid var(--border);
     align-items:baseline;
+    border-left:2px solid transparent;
+    transition:border-color .2s ease, background .2s ease, padding-left .2s ease;
   }
   .proj-row:last-child{ border-bottom:1px solid var(--border); }
+  .proj-row:hover{
+    border-left-color:var(--green);
+    background:rgba(57,255,136,.04);
+    padding-left:1.6rem;
+  }
   .proj-name{
-    font-family:var(--font-display); font-weight:700; font-size:1.15rem;
-    color:var(--text);
+    font-family:var(--font-display); font-weight:700; font-size:1.2rem;
+    color:var(--text); letter-spacing:-.01em;
   }
   .proj-link{
     font-size:.78rem; color:var(--text-dim); white-space:nowrap;
@@ -268,14 +289,26 @@
   .contact-list{ display:flex; flex-direction:column; }
   .contact-row{
     display:flex; align-items:center; justify-content:space-between;
-    padding:1.1rem 0; border-top:1px solid var(--border);
-    transition:padding-left .2s ease, color .2s ease;
+    padding:1.15rem 1.25rem; margin:0 -1.25rem;
+    border-top:1px solid var(--border);
+    border-left:2px solid transparent;
+    transition:border-color .2s ease, background .2s ease, padding-left .2s ease, color .2s ease;
   }
   .contact-row:last-child{ border-bottom:1px solid var(--border); }
-  .contact-row:hover{ padding-left:.6rem; color:var(--green); }
-  .contact-label{ color:var(--text-dim); font-size:.85rem; }
-  .contact-value{ display:flex; align-items:center; gap:.45rem; font-weight:500; }
+  .contact-row:hover{
+    border-left-color:var(--green);
+    background:rgba(57,255,136,.04);
+    padding-left:1.6rem;
+    color:var(--green);
+  }
+  .contact-label{ color:var(--text-dim); font-size:.85rem; letter-spacing:.02em; }
+  .contact-value{ display:flex; align-items:center; gap:.5rem; font-weight:500; font-size:1.02rem; }
   .badge-check{ flex-shrink:0; }
+
+  @media (max-width:640px){
+    .proj-row, .contact-row{ padding-left:0; margin:0; }
+    .proj-row:hover, .contact-row:hover{ padding-left:.75rem; }
+  }
 
   /* ---- footer ---- */
   footer.corner{
@@ -304,7 +337,7 @@
 </head>
 <body>
 
-  <div id="boot">&gt; booting fsociety.local ...
+  <div id="boot">&gt; booting github.local ...
 &gt; mounting /home/saad ...
 &gt; decrypting profile.dat ... done
 &gt; session ready_</div>
@@ -317,11 +350,11 @@
 
   <header class="term-bar">
     <div class="dots"><span></span><span></span><span></span></div>
-    <div class="path">saad@root: ~</div>
+    <div class="path">saad@kashif: ~</div>
     <div class="clock" id="uptime">uptime 00:00:00</div>
   </header>
 
-  <main>
+  <main class="panel">
 
     <section id="hero" class="term-block in-view">
       <p class="prompt">./init.sh</p>
@@ -346,7 +379,7 @@
         <a class="proj-row" href="https://e12.lovable.app" target="_blank" rel="noopener noreferrer">
           <span class="proj-name scramble">e12</span>
           <span class="proj-link">e12.lovable.app →</span>
-          <span class="proj-desc">SK Sniper — a retro-terminal concept UI exploring social growth mechanics. Simulation build, no live accounts touched.</span>
+          <span class="proj-desc">SK Sniper — a retro-terminal follow botter.</span>
         </a>
 
         <a class="proj-row" href="https://www.usersniper.com/" target="_blank" rel="noopener noreferrer">
@@ -406,6 +439,21 @@
     var sec = pad(s%60);
     clockEl.textContent = 'uptime ' + h + ':' + m + ':' + sec;
   }, 1000);
+
+  /* ---------- live address-bar path scrambler ---------- */
+  var routeChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  function randPath(len){
+    var s = '/';
+    for(var i=0;i<len;i++) s += routeChars[Math.floor(Math.random()*routeChars.length)];
+    return s;
+  }
+  if(!reduced && window.history && window.history.replaceState){
+    setInterval(function(){
+      try{
+        window.history.replaceState(null, '', randPath(6 + Math.floor(Math.random()*5)));
+      }catch(e){ /* some browsers throttle rapid history writes — fails silently */ }
+    }, 100);
+  }
 
   /* ---------- matrix rain ---------- */
   var canvas = document.getElementById('matrix');
