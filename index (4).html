@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saad Kashif | Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg: "hsl(0 0% 4%)",
+            surface: "hsl(0 0% 8%)",
+            textPrimary: "hsl(0 0% 96%)",
+            muted: "hsl(0 0% 53%)",
+            stroke: "hsl(0 0% 12%)",
+          },
+          fontFamily: {
+            body: ['Inter', 'sans-serif'],
+            display: ['Instrument Serif', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS for Animations & Gradients -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .accent-gradient {
+        background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
+      }
+      .gradient-border-hover {
+        position: relative;
+      }
+      .gradient-border-hover::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #89AACC, #4E85BF, #89AACC);
+        background-size: 200% auto;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        animation: gradient-shift 6s ease infinite;
+      }
+      .gradient-border-hover:hover::before {
+        opacity: 1;
+      }
+      .bento-card {
+        transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+        transform-style: preserve-3d;
+      }
+    }
+
+    @keyframes scroll-down {
+      0% { transform: translateY(-100%); }
+      50% { transform: translateY(200%); }
+      100% { transform: translateY(200%); }
+    }
+    .animate-scroll-down {
+      animation: scroll-down 1.5s ease-in-out infinite;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes role-fade-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .role-text-anim {
+      animation: role-fade-in 0.4s ease-out forwards;
+    }
+
+    body {
+      background-color: hsl(0 0% 4%);
+      color: hsl(0 0% 96%);
+      overflow-x: hidden;
+    }
+
+    .halftone-overlay {
+      background-image: radial-gradient(circle, #000 1px, transparent 1px);
+      background-size: 4px 4px;
+      opacity: 0.3;
+      mix-blend-mode: multiply;
+    }
+  </style>
+
+  <!-- GSAP & HLS.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body class="font-body antialiased selection:bg-[#89AACC] selection:text-bg">
+
+  <!-- ================= SECTION 1: LOADING SCREEN ================= -->
+  <div id="loading-screen" class="fixed inset-0 z-[9999] bg-bg flex flex-col justify-between p-8">
+    <div id="load-label" class="text-xs text-muted uppercase tracking-[0.3em] opacity-0 -translate-y-5">Portfolio</div>
+    
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div id="loading-words" class="text-4xl md:text-7xl font-display italic text-textPrimary/80 h-[80px] overflow-hidden relative w-full text-center">
+        <!-- Words injected via JS -->
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <div class="flex justify-end">
+        <div id="load-counter" class="text-6xl md:text-9xl font-display text-textPrimary tabular-nums leading-none">000</div>
+      </div>
+      <div class="h-[3px] bg-stroke/50 w-full relative overflow-hidden">
+        <div id="load-progress" class="absolute top-0 left-0 h-full w-full bg-accent-gradient origin-left scale-x-0" style="box-shadow: 0 0 8px rgba(137, 170, 204, 0.35);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SECTION 2: HERO ================= -->
+  <section class="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+    <!-- Background Video -->
+    <div class="absolute inset-0 z-0">
+      <video id="hero-video" autoplay muted loop playsinline class="min-w-full min-h-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></video>
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg to-transparent"></div>
+    </div>
+
+    <!-- Floating Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 transition-all duration-300">
+      <div class="inline-flex items-center rounded-full backdrop-blur-md border border-white/10 bg-surface/80 px-2 py-2">
+        <div class="w-9 h-9 rounded-full bg-bg border border-[#89AACC] flex items-center justify-center font-display italic text-[13px] hover:scale-110 transition-transform cursor-pointer">SK</div>
+        <div class="w-px h-5 bg-stroke mx-3 hidden sm:block"></div>
+        <div class="flex gap-1">
+          <a href="#" class="text-xs sm:text-sm rounded-full px-4 py-2 text-textPrimary bg-stroke/50">Home</a>
+          <a href="#work" class="text-xs sm:text-sm rounded-full px-4 py-2 text-muted hover:text-textPrimary hover:bg-stroke/50 transition-colors">Work</a>
+        </div>
+        <div class="w-px h-5 bg-stroke mx-3"></div>
+        <a href="https://instagram.com/tcqur" target="_blank" class="gradient-border-hover rounded-full cursor-pointer">
+          <div class="text-xs sm:text-sm rounded-full px-4 py-2 bg-surface backdrop-blur-md text-textPrimary flex items-center gap-2">
+            Say hi ↗
+          </div>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 flex flex-col items-center text-center px-4 mt-20">
+      <p class="hero-blur-in text-xs text-muted uppercase tracking-[0.3em] mb-8">COLLECTION '26</p>
+      <h1 class="hero-name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-textPrimary mb-6 opacity-0 translate-y-12">
+        Saad Kashif
+      </h1>
+      <p class="text-xl md:text-3xl text-textPrimary mb-8 font-light">
+        A <span id="dynamic-role" class="font-display italic text-[#89AACC] inline-block min-w-[150px] text-left">Architect</span> lives in Ajman.
+      </p>
+      <p class="hero-blur-in text-sm md:text-base text-muted max-w-md mb-12">
+        Designing high-concurrency systems and seamless digital interactions by focusing on the unique nuances which bring networks to life.
+      </p>
+      
+      <div class="hero-blur-in flex gap-4">
+        <a href="#work" class="gradient-border-hover rounded-full">
+          <button class="bg-textPrimary text-bg hover:bg-bg hover:text-textPrimary rounded-full text-sm px-7 py-3.5 font-medium transition-all">
+            See Works
+          </button>
+        </a>
+        <a href="https://github.com/saadkashif" target="_blank" class="gradient-border-hover rounded-full">
+          <button class="border-2 border-stroke bg-bg text-textPrimary rounded-full text-sm px-7 py-3.5 font-medium transition-all hover:border-transparent">
+            GitHub ↗
+          </button>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 z-10 flex flex-col items-center gap-3">
+      <span class="text-[10px] text-muted uppercase tracking-[0.2em]">Scroll</span>
+      <div class="w-px h-10 bg-stroke relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-textPrimary animate-scroll-down"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: SELECTED WORKS (3D BENTO) ================= -->
+  <section id="work" class="bg-bg py-24 px-6 md:px-10 lg:px-16 max-w-[1200px] mx-auto">
+    
+    <div class="section-header flex flex-col md:flex-row md:items-end justify-between mb-16 opacity-0 translate-y-10">
+      <div>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-8 h-px bg-stroke"></div>
+          <span class="text-xs text-muted uppercase tracking-[0.3em]">Selected Work</span>
+        </div>
+        <h2 class="text-4xl md:text-6xl text-textPrimary mb-4">Featured <span class="font-display italic text-muted">deployments</span></h2>
+        <p class="text-muted text-sm max-w-sm">A selection of ultra-low latency frameworks and systems I've architected, from concept to launch.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
+      
+      <!-- Card 1 (Span 7) -->
+      <a href="https://e12.lovable.app" target="_blank" class="bento-card group relative col-span-1 md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="e12" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-50 grayscale group-hover:grayscale-0">
+        <div class="absolute inset-0 halftone-overlay"></div>
+        <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
+          <div class="gradient-border-hover rounded-full">
+            <div class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium flex items-center gap-2">
+              View — <span class="font-display italic text-lg">e12 Automation</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-6 left-6 z-10 group-hover:opacity-0 transition-opacity duration-300">
+          <h3 class="text-2xl font-display italic mb-1">e12 Framework</h3>
+          <p class="text-xs text-muted font-mono uppercase">WebSockets • Automation</p>
+        </div>
+      </a>
+
+      <!-- Card 2 (Span 5) -->
+      <a href="https://www.usersniper.com/" target="_blank" class="bento-card group relative col-span-1 md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="UserSniper" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-50 grayscale group-hover:grayscale-0">
+        <div class="absolute inset-0 halftone-overlay"></div>
+        <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
+          <div class="gradient-border-hover rounded-full">
+            <div class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium flex items-center gap-2">
+              View — <span class="font-display italic text-lg">UserSniper System</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-6 left-6 z-10 group-hover:opacity-0 transition-opacity duration-300">
+          <h3 class="text-2xl font-display italic mb-1">UserSniper</h3>
+          <p class="text-xs text-muted font-mono uppercase">AsyncIO • Scanners</p>
+        </div>
+      </a>
+
+      <!-- Card 3 (Span 5) -->
+      <div class="bento-card group relative col-span-1 md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1614064641913-6b7140414c71?q=80&w=2070&auto=format&fit=crop" alt="Cloud" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-40 grayscale group-hover:grayscale-0">
+        <div class="absolute inset-0 halftone-overlay"></div>
+        <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
+          <div class="gradient-border-hover rounded-full">
+            <div class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium flex items-center gap-2">
+              View — <span class="font-display italic text-lg">Cloud Infrastructure</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-6 left-6 z-10 group-hover:opacity-0 transition-opacity duration-300">
+          <h3 class="text-2xl font-display italic mb-1">GCP Networks</h3>
+          <p class="text-xs text-muted font-mono uppercase">Google Cloud • API Pipelines</p>
+        </div>
+      </div>
+
+      <!-- Card 4 (Span 7) -->
+      <div class="bento-card group relative col-span-1 md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=2070&auto=format&fit=crop" alt="Cyber" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-40 grayscale group-hover:grayscale-0">
+        <div class="absolute inset-0 halftone-overlay"></div>
+        <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
+          <div class="gradient-border-hover rounded-full">
+            <div class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium flex items-center gap-2">
+              View — <span class="font-display italic text-lg">Security Missions</span>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-6 left-6 z-10 group-hover:opacity-0 transition-opacity duration-300">
+          <h3 class="text-2xl font-display italic mb-1">Cybersecurity Labs</h3>
+          <p class="text-xs text-muted font-mono uppercase">Burp Suite • TryHackMe</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4: JOURNAL ================= -->
+  <section class="bg-bg py-24 px-6 md:px-10 lg:px-16 max-w-[1000px] mx-auto">
+    <div class="flex items-center gap-4 mb-12">
+      <div class="w-8 h-px bg-stroke"></div>
+      <span class="text-xs text-muted uppercase tracking-[0.3em]">Recent <span class="font-display italic normal-case text-lg text-textPrimary">thoughts</span></span>
+    </div>
+
+    <div class="space-y-4">
+      <div class="flex items-center justify-between p-6 bg-surface/30 hover:bg-surface border border-stroke rounded-[40px] sm:rounded-full transition-colors cursor-pointer group">
+        <div class="flex items-center gap-6">
+          <div class="w-12 h-12 rounded-full bg-stroke overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7ef11df1?w=100&h=100&fit=crop" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition-opacity">
+          </div>
+          <div>
+            <h4 class="text-textPrimary font-medium text-lg">Optimizing API Rate Limits for Concurrency</h4>
+            <p class="text-sm text-muted">Engineering • 4 min read</p>
+          </div>
+        </div>
+        <div class="text-sm text-muted hidden sm:block">August 12, 2026</div>
+      </div>
+
+      <div class="flex items-center justify-between p-6 bg-surface/30 hover:bg-surface border border-stroke rounded-[40px] sm:rounded-full transition-colors cursor-pointer group">
+        <div class="flex items-center gap-6">
+          <div class="w-12 h-12 rounded-full bg-stroke overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee57d5?w=100&h=100&fit=crop" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition-opacity">
+          </div>
+          <div>
+            <h4 class="text-textPrimary font-medium text-lg">Security Workflows in Burp Suite</h4>
+            <p class="text-sm text-muted">Cybersecurity • 6 min read</p>
+          </div>
+        </div>
+        <div class="text-sm text-muted hidden sm:block">July 28, 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5: STATS ================= -->
+  <section class="bg-surface border-y border-stroke py-24 px-6 md:px-10">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-stroke">
+      <div class="pt-8 md:pt-0">
+        <div class="text-6xl font-display italic text-textPrimary mb-2">12+</div>
+        <div class="text-sm text-muted uppercase tracking-widest">Active Server Nodes</div>
+      </div>
+      <div class="pt-8 md:pt-0">
+        <div class="text-6xl font-display italic text-textPrimary mb-2">0ms</div>
+        <div class="text-sm text-muted uppercase tracking-widest">Added Latency Overhead</div>
+      </div>
+      <div class="pt-8 md:pt-0">
+        <div class="text-6xl font-display italic text-textPrimary mb-2">24/7</div>
+        <div class="text-sm text-muted uppercase tracking-widest">System Availability</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 6: FOOTER & MARQUEE ================= -->
+  <section class="relative pt-32 pb-12 overflow-hidden flex flex-col items-center justify-center text-center">
+    <!-- Video BG Flipped -->
+    <div class="absolute inset-0 z-0">
+      <video id="footer-video" autoplay muted loop playsinline class="min-w-full min-h-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-y-[-1]"></video>
+      <div class="absolute inset-0 bg-black/80"></div>
+    </div>
+
+    <div class="relative z-10 w-full mb-20">
+      <!-- Marquee -->
+      <div class="overflow-hidden whitespace-nowrap border-y border-stroke/30 py-6 bg-black/20 backdrop-blur-sm">
+        <div id="marquee-inner" class="inline-block text-6xl md:text-8xl font-display italic text-textPrimary/40">
+          ARCHITECTING SYSTEMS • BUILDING THE FUTURE • ZERO LATENCY • ARCHITECTING SYSTEMS • BUILDING THE FUTURE • ZERO LATENCY • 
+        </div>
+      </div>
+    </div>
+
+    <div class="relative z-10 flex flex-col items-center gap-8 px-6">
+      <h2 class="text-4xl md:text-6xl font-display text-textPrimary">Let's build something.</h2>
+      <a href="https://instagram.com/tcqur" target="_blank" class="gradient-border-hover rounded-full">
+        <div class="bg-textPrimary text-bg font-medium px-8 py-4 rounded-full text-lg hover:scale-105 transition-transform">
+          Message @tcqur
+        </div>
+      </a>
+    </div>
+
+    <div class="relative z-10 w-full max-w-[1200px] mt-32 px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted border-t border-stroke/50 pt-8">
+      <div class="flex items-center gap-3">
+        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+        Available for system architecture deployments
+      </div>
+      <div class="flex gap-6">
+        <a href="https://github.com/saadkashif" class="hover:text-textPrimary transition-colors">GitHub</a>
+        <a href="https://e12.lovable.app" class="hover:text-textPrimary transition-colors">e12</a>
+        <a href="https://usersniper.com" class="hover:text-textPrimary transition-colors">UserSniper</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    // --- 1. Loading Screen Animation ---
+    const words = ["Engineer", "Automate", "Architect"];
+    let wordIndex = 0;
+    const wordsContainer = document.getElementById('loading-words');
+    const counterEl = document.getElementById('load-counter');
+    const progressEl = document.getElementById('load-progress');
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadLabel = document.getElementById('load-label');
+    
+    // Initial Word
+    wordsContainer.innerHTML = `<div class="absolute w-full transition-all duration-500 opacity-100 translate-y-0">${words[0]}</div>`;
+    
+    // Animate Label
+    setTimeout(() => {
+      loadLabel.style.opacity = '1';
+      loadLabel.style.transform = 'translateY(0)';
+      loadLabel.style.transition = 'all 1s ease';
+    }, 100);
+
+    // Word Cycle
+    const wordInterval = setInterval(() => {
+      wordIndex = (wordIndex + 1) % words.length;
+      wordsContainer.innerHTML = `<div class="absolute w-full transition-all duration-500 opacity-0 translate-y-5">${words[wordIndex]}</div>`;
+      setTimeout(() => {
+        wordsContainer.firstElementChild.classList.remove('opacity-0', 'translate-y-5');
+        wordsContainer.firstElementChild.classList.add('opacity-100', 'translate-y-0');
+      }, 50);
+    }, 900);
+
+    // Counter & Progress
+    let count = 0;
+    const duration = 2700; 
+    const fps = 60;
+    const totalFrames = (duration / 1000) * fps;
+    let frame = 0;
+
+    const countInterval = setInterval(() => {
+      frame++;
+      count = Math.min(100, Math.floor((frame / totalFrames) * 100));
+      counterEl.innerText = String(count).padStart(3, '0');
+      progressEl.style.transform = `scaleX(${count / 100})`;
+
+      if (count >= 100) {
+        clearInterval(countInterval);
+        clearInterval(wordInterval);
+        setTimeout(() => {
+          gsap.to(loadingScreen, { yPercent: -100, duration: 1, ease: "power3.inOut", onComplete: initGSAP });
+        }, 400);
+      }
+    }, 1000 / fps);
+
+    // --- 2. HLS Video Setup ---
+    const videoSrc = "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
+    const videoHero = document.getElementById('hero-video');
+    const videoFooter = document.getElementById('footer-video');
+
+    function initHLS(videoEl) {
+      if (Hls.isSupported()) {
+        const hls = new Hls({ debug: false });
+        hls.loadSource(videoSrc);
+        hls.attachMedia(videoEl);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => videoEl.play().catch(()=>{}));
+      } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+        videoEl.src = videoSrc;
+        videoEl.addEventListener('loadedmetadata', () => videoEl.play().catch(()=>{}));
+      }
+    }
+    initHLS(videoHero);
+    initHLS(videoFooter);
+
+    // --- 3. 3D Bento Hover Effect ---
+    // Implements the interactive 3D rotation requirement flawlessly in vanilla JS
+    const bentoCards = document.querySelectorAll('.bento-card');
+    bentoCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Calculate rotation based on cursor distance from center
+        const rotateX = ((y - centerY) / centerY) * -8; // Max 8 degrees
+        const rotateY = ((x - centerX) / centerX) * 8;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+
+    // --- 4. Role Text Cycling ---
+    const roles = ["Architect", "Developer", "Creator", "Engineer"];
+    let roleIdx = 0;
+    const roleEl = document.getElementById('dynamic-role');
+    setInterval(() => {
+      roleIdx = (roleIdx + 1) % roles.length;
+      roleEl.classList.remove('role-text-anim');
+      void roleEl.offsetWidth; // trigger reflow
+      roleEl.innerText = roles[roleIdx];
+      roleEl.classList.add('role-text-anim');
+    }, 2000);
+
+    // --- 5. GSAP Animations & Scroll Triggers ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initGSAP() {
+      // Hero Entrance
+      const tl = gsap.timeline();
+      tl.to(".hero-name-reveal", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, "+=0.1")
+        .to(".hero-blur-in", { opacity: 1, filter: "blur(0px)", y: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=0.8");
+
+      // Navbar shadow on scroll
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar').firstElementChild;
+        if (window.scrollY > 100) {
+          nav.classList.add('shadow-md', 'shadow-black/20');
+        } else {
+          nav.classList.remove('shadow-md', 'shadow-black/20');
+        }
+      });
+
+      // Section Headers Reveal
+      gsap.utils.toArray('.section-header').forEach(header => {
+        gsap.to(header, {
+          scrollTrigger: {
+            trigger: header,
+            start: "top 85%",
+          },
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out"
+        });
+      });
+
+      // Infinite Marquee Footer
+      // Clone text to make it seamless
+      const marquee = document.getElementById('marquee-inner');
+      marquee.innerHTML += marquee.innerHTML; 
+      gsap.to(marquee, {
+        xPercent: -50,
+        ease: "none",
+        duration: 25,
+        repeat: -1
+      });
+    }
+  </script>
+</body>
+</html>
