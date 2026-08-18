@@ -98,10 +98,6 @@
       opacity: 0.3;
       mix-blend-mode: multiply;
     }
-
-    /* Games area styles */
-    .game-container { max-width: 900px; margin: 0 auto; }
-    .game-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; padding: 16px; }
   </style>
 
   <!-- GSAP & HLS.js -->
@@ -143,15 +139,14 @@
     <!-- Floating Navbar -->
     <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 transition-all duration-300">
       <div class="inline-flex items-center rounded-full backdrop-blur-md border border-white/10 bg-surface/80 px-2 py-2">
-        <div class="w-9 h-9 rounded-full bg-bg border border-[#89AACC] flex items-center justify-center font-display italic text-[13px] hover:scale-110 transition-transform cursor-pointer">SK</div>
+        <div class="w-9 h-9 rounded-full bg-bg border border-[#89AACC] flex items-center justify-center font-display italic text-[13px] hover:scale-110 transition-transform cursor-pointer">SK</di[...]
         <div class="w-px h-5 bg-stroke mx-3 hidden sm:block"></div>
         <div class="flex gap-1">
           <a href="#" class="text-xs sm:text-sm rounded-full px-4 py-2 text-textPrimary bg-stroke/50">Home</a>
           <a href="#work" class="text-xs sm:text-sm rounded-full px-4 py-2 text-muted hover:text-textPrimary hover:bg-stroke/50 transition-colors">Work</a>
-          <a href="#games" id="games-nav-link" class="text-xs sm:text-sm rounded-full px-4 py-2 text-muted hover:text-textPrimary hover:bg-stroke/50 transition-colors">Games</a>
         </div>
         <div class="w-px h-5 bg-stroke mx-3"></div>
-        <a href="https://instagram.com/tcqur" target="_blank" class="gradient-border-hover rounded-full">
+        <a href="https://instagram.com/tcqur" target="_blank" class="gradient-border-hover rounded-full cursor-pointer">
           <div class="text-xs sm:text-sm rounded-full px-4 py-2 bg-surface backdrop-blur-md text-textPrimary flex items-center gap-2">
             Say hi ↗
           </div>
@@ -213,7 +208,7 @@
       
       <!-- Card 1 (Span 7) -->
       <a href="https://e12.lovable.app" target="_blank" class="bento-card group relative col-span-1 md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="e12" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="e12" class="absolute inset-0 w-full h-full object-cover transition-transform dur[...]
         <div class="absolute inset-0 halftone-overlay"></div>
         <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
           <div class="gradient-border-hover rounded-full">
@@ -229,8 +224,8 @@
       </a>
 
       <!-- Card 2 (Span 5) -->
-      <a href="https://www.usersniper.com/" target="_blank" class="bento-card group relative col-span-1 md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="UserSniper" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+      <a href="https://www.usersniper.com/" target="_blank" class="bento-card group relative col-span-1 md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke roun[...]
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="UserSniper" class="absolute inset-0 w-full h-full object-cover transition-tra[...]
         <div class="absolute inset-0 halftone-overlay"></div>
         <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
           <div class="gradient-border-hover rounded-full">
@@ -247,7 +242,7 @@
 
       <!-- Card 3 (Span 5) -->
       <div class="bento-card group relative col-span-1 md:col-span-5 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1614064641913-6b7140414c71?q=80&w=2070&auto=format&fit=crop" alt="Cloud" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <img src="https://images.unsplash.com/photo-1614064641913-6b7140414c71?q=80&w=2070&auto=format&fit=crop" alt="Cloud" class="absolute inset-0 w-full h-full object-cover transition-transfor[...]
         <div class="absolute inset-0 halftone-overlay"></div>
         <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
           <div class="gradient-border-hover rounded-full">
@@ -264,7 +259,7 @@
 
       <!-- Card 4 (Span 7) -->
       <div class="bento-card group relative col-span-1 md:col-span-7 aspect-[4/3] md:aspect-auto md:h-[450px] bg-surface border border-stroke rounded-3xl overflow-hidden cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=2070&auto=format&fit=crop" alt="Cyber" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=2070&auto=format&fit=crop" alt="Cyber" class="absolute inset-0 w-full h-full object-cover transition-transfor[...]
         <div class="absolute inset-0 halftone-overlay"></div>
         <div class="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center">
           <div class="gradient-border-hover rounded-full">
@@ -293,7 +288,7 @@
       <div class="flex items-center justify-between p-6 bg-surface/30 hover:bg-surface border border-stroke rounded-[40px] sm:rounded-full transition-colors cursor-pointer group">
         <div class="flex items-center gap-6">
           <div class="w-12 h-12 rounded-full bg-stroke overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1517430816045-df4b7ef11df1?w=100&h=100&fit=crop" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition-all">
+            <img src="https://images.unsplash.com/photo-1517430816045-df4b7ef11df1?w=100&h=100&fit=crop" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition-[...]
           </div>
           <div>
             <h4 class="text-textPrimary font-medium text-lg">Optimizing API Rate Limits for Concurrency</h4>
@@ -306,7 +301,7 @@
       <div class="flex items-center justify-between p-6 bg-surface/30 hover:bg-surface border border-stroke rounded-[40px] sm:rounded-full transition-colors cursor-pointer group">
         <div class="flex items-center gap-6">
           <div class="w-12 h-12 rounded-full bg-stroke overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee57d5?w=100&h=100&fit=crop" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition-opacity">
+            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee57d5?w=100&h=100&fit=crop" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 transition-opa[...]
           </div>
           <div>
             <h4 class="text-textPrimary font-medium text-lg">Security Workflows in Burp Suite</h4>
@@ -336,44 +331,7 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 6: GAMES ================= -->
-  <section id="games" class="bg-bg py-24 px-6 md:px-10 lg:px-16 max-w-[1000px] mx-auto">
-    <div class="flex items-center gap-4 mb-12">
-      <div class="w-8 h-px bg-stroke"></div>
-      <span class="text-xs text-muted uppercase tracking-[0.3em]">Play <span class="font-display italic normal-case text-lg text-textPrimary">games</span></span>
-    </div>
-
-    <div class="game-container space-y-6">
-      <div class="game-card p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-display">Tic-Tac-Toe</h3>
-          <div class="text-sm text-muted">A quick two-player or vs CPU game</div>
-        </div>
-        <div id="tictactoe" class="grid grid-cols-3 gap-2 w-[320px] mx-auto"></div>
-        <div class="mt-4 flex justify-center gap-4">
-          <button id="t3-reset" class="px-4 py-2 rounded bg-[#89AACC] text-bg">Reset</button>
-          <button id="t3-cpu" class="px-4 py-2 rounded border border-stroke text-muted">Play vs CPU</button>
-        </div>
-      </div>
-
-      <div class="game-card p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-display">Snake</h3>
-          <div class="text-sm text-muted">Use arrow keys to move. Eat the dot to grow.</div>
-        </div>
-        <div class="flex items-center justify-center">
-          <canvas id="snake-canvas" width="400" height="400" class="border rounded"></canvas>
-        </div>
-        <div class="mt-4 flex justify-center gap-4">
-          <button id="snake-start" class="px-4 py-2 rounded bg-[#89AACC] text-bg">Start</button>
-          <button id="snake-reset" class="px-4 py-2 rounded border border-stroke text-muted">Reset</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= SECTION 7: FOOTER & MARQUEE ================= -->
+  <!-- ================= SECTION 6: FOOTER & MARQUEE ================= -->
   <section class="relative pt-32 pb-12 overflow-hidden flex flex-col items-center justify-center text-center">
     <!-- Video BG Flipped -->
     <div class="absolute inset-0 z-0">
@@ -424,29 +382,23 @@
     const loadLabel = document.getElementById('load-label');
     
     // Initial Word
-    if (wordsContainer) wordsContainer.innerHTML = `<div class="absolute w-full transition-all duration-500 opacity-100 translate-y-0">${words[0]}</div>`;
+    wordsContainer.innerHTML = `<div class="absolute w-full transition-all duration-500 opacity-100 translate-y-0">${words[0]}</div>`;
     
     // Animate Label
     setTimeout(() => {
-      if (loadLabel) {
-        loadLabel.style.opacity = '1';
-        loadLabel.style.transform = 'translateY(0)';
-        loadLabel.style.transition = 'all 1s ease';
-      }
+      loadLabel.style.opacity = '1';
+      loadLabel.style.transform = 'translateY(0)';
+      loadLabel.style.transition = 'all 1s ease';
     }, 100);
 
     // Word Cycle
     const wordInterval = setInterval(() => {
       wordIndex = (wordIndex + 1) % words.length;
-      if (wordsContainer) {
-        wordsContainer.innerHTML = `<div class="absolute w-full transition-all duration-500 opacity-0 translate-y-5">${words[wordIndex]}</div>`;
-        setTimeout(() => {
-          if (wordsContainer.firstElementChild) {
-            wordsContainer.firstElementChild.classList.remove('opacity-0', 'translate-y-5');
-            wordsContainer.firstElementChild.classList.add('opacity-100', 'translate-y-0');
-          }
-        }, 50);
-      }
+      wordsContainer.innerHTML = `<div class="absolute w-full transition-all duration-500 opacity-0 translate-y-5">${words[wordIndex]}</div>`;
+      setTimeout(() => {
+        wordsContainer.firstElementChild.classList.remove('opacity-0', 'translate-y-5');
+        wordsContainer.firstElementChild.classList.add('opacity-100', 'translate-y-0');
+      }, 50);
     }, 900);
 
     // Counter & Progress
@@ -459,8 +411,8 @@
     const countInterval = setInterval(() => {
       frame++;
       count = Math.min(100, Math.floor((frame / totalFrames) * 100));
-      if (counterEl) counterEl.innerText = String(count).padStart(3, '0');
-      if (progressEl) progressEl.style.transform = `scaleX(${count / 100})`;
+      counterEl.innerText = String(count).padStart(3, '0');
+      progressEl.style.transform = `scaleX(${count / 100})`;
 
       if (count >= 100) {
         clearInterval(countInterval);
@@ -477,13 +429,12 @@
     const videoFooter = document.getElementById('footer-video');
 
     function initHLS(videoEl) {
-      if (!videoEl) return;
-      if (Hls && Hls.isSupported()) {
+      if (Hls.isSupported()) {
         const hls = new Hls({ debug: false });
         hls.loadSource(videoSrc);
         hls.attachMedia(videoEl);
         hls.on(Hls.Events.MANIFEST_PARSED, () => videoEl.play().catch(()=>{}));
-      } else if (videoEl.canPlayType && videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+      } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
         videoEl.src = videoSrc;
         videoEl.addEventListener('loadedmetadata', () => videoEl.play().catch(()=>{}));
       }
@@ -492,6 +443,7 @@
     initHLS(videoFooter);
 
     // --- 3. 3D Bento Hover Effect ---
+    // Implements the interactive 3D rotation requirement flawlessly in vanilla JS
     const bentoCards = document.querySelectorAll('.bento-card');
     bentoCards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -519,7 +471,6 @@
     const roleEl = document.getElementById('dynamic-role');
     setInterval(() => {
       roleIdx = (roleIdx + 1) % roles.length;
-      if (!roleEl) return;
       roleEl.classList.remove('role-text-anim');
       void roleEl.offsetWidth; // trigger reflow
       roleEl.innerText = roles[roleIdx];
@@ -562,149 +513,14 @@
       // Infinite Marquee Footer
       // Clone text to make it seamless
       const marquee = document.getElementById('marquee-inner');
-      if (marquee) {
-        marquee.innerHTML += marquee.innerHTML; 
-        gsap.to(marquee, {
-          xPercent: -50,
-          ease: "none",
-          duration: 25,
-          repeat: -1
-        });
-      }
-    }
-
-    // --- 6. Simple Tic-Tac-Toe ---
-    (function(){
-      const boardEl = document.getElementById('tictactoe');
-      const resetBtn = document.getElementById('t3-reset');
-      const cpuBtn = document.getElementById('t3-cpu');
-      let board = Array(9).fill(null);
-      let turn = 'X';
-      let vsCPU = false;
-      const wins = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-      ];
-
-      function renderBoard(){
-        if (!boardEl) return;
-        boardEl.innerHTML = '';
-        board.forEach((v,i) => {
-          const cell = document.createElement('div');
-          cell.className = 'w-24 h-24 flex items-center justify-center text-3xl font-bold text-textPrimary bg-bg/50 rounded cursor-pointer select-none';
-          cell.innerText = v || '';
-          cell.addEventListener('click', () => play(i));
-          boardEl.appendChild(cell);
-        });
-      }
-
-      function checkWinner(b){
-        for (const [a,c,d] of wins) {
-          if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
-        }
-        if (b.every(Boolean)) return 'T';
-        return null;
-      }
-
-      function play(i){
-        if (board[i] || checkWinner(board)) return;
-        board[i] = turn;
-        const winner = checkWinner(board);
-        renderBoard();
-        if (winner) {
-          setTimeout(() => alert(winner === 'T' ? 'Tie!' : `${winner} wins!`), 50);
-          return;
-        }
-        turn = turn === 'X' ? 'O' : 'X';
-        if (vsCPU && turn === 'O') {
-          setTimeout(cpuMove, 300);
-        }
-      }
-
-      function cpuMove(){
-        // naive CPU: pick random empty
-        const empties = board.map((v,i)=> v?null:i).filter(v=>v!==null);
-        if (!empties.length) return;
-        const idx = empties[Math.floor(Math.random()*empties.length)];
-        play(idx);
-      }
-
-      function reset(){ board = Array(9).fill(null); turn='X'; renderBoard(); }
-
-      if (resetBtn) resetBtn.addEventListener('click', reset);
-      if (cpuBtn) cpuBtn.addEventListener('click', ()=>{ vsCPU = !vsCPU; cpuBtn.innerText = vsCPU ? 'Playing vs CPU' : 'Play vs CPU'; if (vsCPU && turn==='O') cpuMove(); });
-      renderBoard();
-    })();
-
-    // --- 7. Simple Snake (canvas) ---
-    (function(){
-      const canvas = document.getElementById('snake-canvas');
-      const startBtn = document.getElementById('snake-start');
-      const resetBtn = document.getElementById('snake-reset');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const size = 20; // grid size
-      const cols = canvas.width / size;
-      const rows = canvas.height / size;
-      let snake = [{x:Math.floor(cols/2), y:Math.floor(rows/2)}];
-      let dir = {x:1,y:0};
-      let food = null;
-      let running = false;
-      let loopId = null;
-
-      function placeFood(){
-        food = { x: Math.floor(Math.random()*cols), y: Math.floor(Math.random()*rows) };
-        // avoid placing on snake
-        if (snake.some(s=>s.x===food.x && s.y===food.y)) placeFood();
-      }
-
-      function draw(){
-        ctx.fillStyle = '#050505';
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        // draw food
-        if (food) {
-          ctx.fillStyle = '#89AACC';
-          ctx.fillRect(food.x*size, food.y*size, size, size);
-        }
-        // draw snake
-        ctx.fillStyle = '#dbeafe';
-        snake.forEach((s,i)=>{
-          ctx.fillRect(s.x*size, s.y*size, size-1, size-1);
-        });
-      }
-
-      function step(){
-        const head = { x: (snake[0].x + dir.x + cols) % cols, y: (snake[0].y + dir.y + rows) % rows };
-        // collide with self
-        if (snake.some(s=>s.x===head.x && s.y===head.y)) { stop(); alert('Game over'); return; }
-        snake.unshift(head);
-        if (food && head.x===food.x && head.y===food.y) {
-          placeFood();
-        } else {
-          snake.pop();
-        }
-        draw();
-      }
-
-      function start(){ if (running) return; running=true; if (!food) placeFood(); loopId = setInterval(step, 120); }
-      function stop(){ running=false; clearInterval(loopId); loopId=null; }
-      function reset(){ stop(); snake=[{x:Math.floor(cols/2), y:Math.floor(rows/2)}]; dir={x:1,y:0}; placeFood(); draw(); }
-
-      document.addEventListener('keydown', (e)=>{
-        if (e.key.includes('Arrow')) {
-          if (e.key === 'ArrowUp' && dir.y===0) dir = {x:0,y:-1};
-          if (e.key === 'ArrowDown' && dir.y===0) dir = {x:0,y:1};
-          if (e.key === 'ArrowLeft' && dir.x===0) dir = {x:-1,y:0};
-          if (e.key === 'ArrowRight' && dir.x===0) dir = {x:1,y:0};
-        }
+      marquee.innerHTML += marquee.innerHTML; 
+      gsap.to(marquee, {
+        xPercent: -50,
+        ease: "none",
+        duration: 25,
+        repeat: -1
       });
-
-      if (startBtn) startBtn.addEventListener('click', start);
-      if (resetBtn) resetBtn.addEventListener('click', reset);
-      reset();
-    })();
-
+    }
   </script>
 </body>
 </html>
