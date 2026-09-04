@@ -1,440 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saad Kashif | Interactive Risograph Liquid Glass</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --paper-bg: #f4f0e6;
-            --cmyk-c: #00aeef;
-            --cmyk-m: #ec008c;
-            --cmyk-y: #fff200;
-            --cmyk-k: #111111;
-            --glass-bg: rgba(244, 240, 230, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.7);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--paper-bg);
-            color: var(--cmyk-k);
-            font-family: 'Space Grotesk', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* CMYK Halftone Overlay */
-        .halftone-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 99;
-            opacity: 0.18;
-            background-image: radial-gradient(var(--cmyk-k) 1.2px, transparent 1.2px);
-            background-size: 8px 8px;
-            mix-blend-mode: multiply;
-        }
-
-        /* Risograph Grain Background Filter */
-        .grain-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 98;
-            opacity: 0.25;
-            filter: url('#riso-grain');
-            mix-blend-mode: multiply;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        header {
-            margin-bottom: 4rem;
-            text-align: left;
-        }
-
-        .riso-tag {
-            display: inline-block;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: var(--cmyk-y);
-            color: var(--cmyk-k);
-            padding: 0.2rem 0.6rem;
-            margin-bottom: 1rem;
-            border: 2px solid var(--cmyk-k);
-            box-shadow: 3px 3px 0px var(--cmyk-c);
-            cursor: pointer;
-        }
-
-        /* Reactive Base Classes */
-        .reactive-text {
-            display: inline-block;
-            transition: transform 0.12s ease-out, text-shadow 0.12s ease-out, filter 0.12s ease-out;
-            will-change: transform, text-shadow;
-            cursor: default;
-        }
-
-        h1.brand-title {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 800;
-            line-height: 0.95;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            color: var(--cmyk-k);
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        /* Letter-by-letter split wrapper */
-        .char {
-            display: inline-block;
-            transition: transform 0.1s ease-out, text-shadow 0.1s ease-out;
-            will-change: transform, text-shadow;
-            text-shadow: 
-                -3px -2px 0px var(--cmyk-c),
-                3px 2px 0px var(--cmyk-m),
-                0px 4px 0px var(--cmyk-y);
-        }
-
-        .hero-desc {
-            font-size: 1.25rem;
-            max-width: 650px;
-            font-weight: 600;
-            line-height: 1.5;
-            mix-blend-mode: multiply;
-        }
-
-        /* Liquid Glass Cards */
-        .glass-card {
-            position: relative;
-            background: var(--glass-bg);
-            border: 2px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            filter: url('#liquid-glass-distortion');
-            box-shadow: 
-                -4px -4px 0px var(--cmyk-c),
-                4px 4px 0px var(--cmyk-m),
-                0 20px 40px rgba(0,0,0,0.08);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-card:hover {
-            transform: translateY(-6px) scale(1.01);
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 24px;
-            padding: 2px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(0,174,239,0.3), rgba(236,0,140,0.3), rgba(255,255,255,0.1));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        .card-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: -1.5px -1px 0 var(--cmyk-c), 1.5px 1px 0 var(--cmyk-m);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1.2rem;
-        }
-
-        .cmyk-chip {
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            border: 1.5px solid var(--cmyk-k);
-            mix-blend-mode: multiply;
-            transition: transform 0.15s ease;
-            cursor: pointer;
-        }
-
-        .cmyk-chip:hover {
-            transform: scale(1.1) rotate(-3deg);
-        }
-
-        .chip-c { background: var(--cmyk-c); color: #fff; }
-        .chip-m { background: var(--cmyk-m); color: #fff; }
-        .chip-y { background: var(--cmyk-y); color: var(--cmyk-k); }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .riso-btn {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            padding: 0.8rem 1.8rem;
-            color: var(--cmyk-k);
-            background: var(--cmyk-y);
-            border: 2px solid var(--cmyk-k);
-            box-shadow: 4px 4px 0px var(--cmyk-k);
-            transition: all 0.15s ease;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .riso-btn:hover {
-            box-shadow: 6px 6px 0px var(--cmyk-m);
-            background: var(--cmyk-c);
-            color: #fff;
-        }
-
-        footer {
-            margin-top: 5rem;
-            padding-top: 2rem;
-            border-top: 2px dashed var(--cmyk-k);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            mix-blend-mode: multiply;
-        }
-
-        svg.svg-filters {
-            width: 0; height: 0; position: absolute;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saad Kashif — Portfolio</title>
+<meta name="description" content="Saad Kashif — developer working across API integrations, interactive builds, and security testing.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/print.css" media="print">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-    <div class="halftone-overlay"></div>
-    <div class="grain-bg"></div>
+<a href="#contact" class="skip-link">Skip to contact</a>
 
-    <div class="container">
-        
-        <header>
-            <span class="riso-tag reactive-text">C M Y K / 001 — RISO EDITION</span>
-            <h1 class="brand-title" id="interactiveTitle">SAAD KASHIF</h1>
-            <p class="hero-desc reactive-text">
-                Software developer, cloud architect & cybersecurity analyst crafting fluid digital experiences with an eye for raw print aesthetics.
-            </p>
-            <div class="btn-group">
-                <a href="#projects" class="riso-btn reactive-text">EXPLORE LABS</a>
-                <a href="mailto:your-email@example.com" class="riso-btn reactive-text" style="background: var(--cmyk-c); color: #fff;">GET IN TOUCH</a>
-            </div>
-        </header>
+<div class="scroll-progress" id="scrollProgress"></div>
 
-        <main>
-            <div class="glass-card">
-                <h2 class="card-title reactive-text">Core Disciplines</h2>
-                <p>Focused on building lightweight web software, auditing security frameworks, and optimizing modern cloud pipelines.</p>
-            </div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-            <div class="grid">
-                <div class="glass-card">
-                    <h3 class="card-title reactive-text" style="font-size: 1.3rem;">Application Dev</h3>
-                    <p>Rapid prototyping and scalable codebases managed using cloud IDE environments and GitHub workflows.</p>
-                    <div class="tag-container">
-                        <span class="cmyk-chip chip-c">GitHub</span>
-                        <span class="cmyk-chip chip-y">Replit</span>
-                        <span class="cmyk-chip chip-m">JavaScript</span>
-                    </div>
-                </div>
+<div class="cookie-banner" id="cookieBanner">
+  <p>This site uses minimal cookies for basic functionality.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-ghost" id="cookieDecline">Decline</button>
+    <button class="btn btn-solid" id="cookieAccept">Accept</button>
+  </div>
+</div>
 
-                <div class="glass-card">
-                    <h3 class="card-title reactive-text" style="font-size: 1.3rem;">Cybersecurity</h3>
-                    <p>Web application vulnerability analysis, intercepting HTTP traffic, and hands-on lab training.</p>
-                    <div class="tag-container">
-                        <span class="cmyk-chip chip-m">Burp Suite</span>
-                        <span class="cmyk-chip chip-c">TryHackMe</span>
-                        <span class="cmyk-chip chip-y">AppSec</span>
-                    </div>
-                </div>
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#top" class="logo" aria-label="Saad Kashif — home">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="28" height="28" rx="7" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M9 20L15 9L21 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.5 15.5H18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>Saad Kashif</span>
+    </a>
 
-                <div class="glass-card">
-                    <h3 class="card-title reactive-text" style="font-size: 1.3rem;">Cloud & Security</h3>
-                    <p>Domain administration, API platform management, DNS protection, and cloud performance routing.</p>
-                    <div class="tag-container">
-                        <span class="cmyk-chip chip-y">Cloudflare</span>
-                        <span class="cmyk-chip chip-c">Google Cloud</span>
-                    </div>
-                </div>
-            </div>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-            <div class="glass-card" id="projects" style="margin-top: 1.5rem;">
-                <h2 class="card-title reactive-text">Active Projects</h2>
-                <div class="grid">
-                    <div>
-                        <h4 class="reactive-text" style="font-size: 1.1rem; margin-bottom: 0.4rem; font-weight:700;">Cloud API Integration Engine</h4>
-                        <p style="font-size: 0.95rem;">Modular cloud service connector engineered for dynamic traffic handling and security verification.</p>
-                    </div>
-                    <div>
-                        <h4 class="reactive-text" style="font-size: 1.1rem; margin-bottom: 0.4rem; font-weight:700;">Web App Testing Sandbox</h4>
-                        <p style="font-size: 0.95rem;">Automated security audit testing ground using Burp Suite frameworks and custom script integrations.</p>
-                    </div>
-                </div>
-            </div>
-        </main>
+    <div class="header-actions">
+      <button class="icon-btn" id="searchToggle" aria-label="Open search" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M9 1V3M9 15V17M17 9H15M3 9H1M14.6 3.4L13.2 4.8M4.8 13.2L3.4 14.6M14.6 14.6L13.2 13.2M4.8 4.8L3.4 3.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M16 10.5A7 7 0 117.5 2a5.5 5.5 0 008.5 8.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
 
-        <footer>
-            <span class="reactive-text">© 2026 SAAD KASHIF</span>
-            <span class="reactive-text">LIQUID-GLASS.JS × RISO CMYK</span>
-        </footer>
+  <div class="search-panel" id="searchPanel">
+    <div class="search-inner">
+      <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="text" id="searchInput" placeholder="Search projects, skills, sections…" autocomplete="off">
+      <button class="icon-btn" id="searchClose" aria-label="Close search">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</header>
 
+<div class="mobile-menu" id="mobileMenu">
+  <nav aria-label="Mobile primary">
+    <a href="#work" class="mobile-link"><span>01</span>Work</a>
+    <a href="#about" class="mobile-link"><span>02</span>About</a>
+    <a href="#skills" class="mobile-link"><span>03</span>Skills</a>
+    <a href="#contact" class="mobile-link"><span>04</span>Contact</a>
+  </nav>
+  <div class="mobile-menu-footer">
+    <p>saad · developer</p>
+  </div>
+</div>
+
+<main id="top">
+
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <p class="eyebrow reveal">Developer &amp; builder</p>
+      <h1 class="hero-title">
+        <span class="line reveal">I build systems that</span>
+        <span class="line reveal">connect, secure,</span>
+        <span class="line reveal">and <em>work</em>.</span>
+      </h1>
+      <p class="hero-sub reveal">Saad Kashif — API integrations, interactive tools, and the security testing that keeps them honest.</p>
+      <div class="hero-actions reveal">
+        <a href="#work" class="btn btn-solid">See the work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"><i></i></div>
+    </div>
+  </section>
+
+  <section class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>APIs</span><span>·</span><span>Security testing</span><span>·</span><span>Interactive builds</span><span>·</span><span>Python</span><span>·</span><span>GCP</span><span>·</span>
+      <span>APIs</span><span>·</span><span>Security testing</span><span>·</span><span>Interactive builds</span><span>·</span><span>Python</span><span>·</span><span>GCP</span><span>·</span>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <div class="section-head">
+      <p class="eyebrow reveal">Selected work</p>
+      <h2 class="reveal">Projects worth a closer look</h2>
     </div>
 
-    <!-- SVG Filters for Dynamic Liquid Glass & Risograph Noise -->
-    <svg class="svg-filters">
-        <defs>
-            <filter id="liquid-glass-distortion" x="-10%" y="-10%" width="120%" height="120%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.02 0.015" numOctaves="2" result="noise" id="turbulence" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
+    <div class="work-grid">
 
-            <filter id="riso-grain">
-                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
-                <feColorMatrix type="saturate" values="0" />
-            </filter>
-        </defs>
-    </svg>
+      <article class="work-card work-card--featured reveal" data-search="free-api open source api directory project">
+        <div class="work-card-media">
+          <svg class="work-mesh" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="meshA" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--mesh-a-1)"/>
+                <stop offset="100%" stop-color="var(--mesh-a-2)"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#meshA)"/>
+            <g opacity="0.5" stroke="var(--mesh-line)" stroke-width="1">
+              <path d="M0 60 L400 100" /><path d="M0 140 L400 180" /><path d="M0 220 L400 260" />
+              <path d="M60 0 L100 300" /><path d="M180 0 L220 300" /><path d="M300 0 L340 300" />
+            </g>
+            <circle cx="130" cy="110" r="42" fill="none" stroke="var(--mesh-accent)" stroke-width="1.5"/>
+            <circle cx="280" cy="190" r="70" fill="none" stroke="var(--mesh-accent)" stroke-width="1.5" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="work-card-body">
+          <span class="work-tag">Open source · maintained</span>
+          <h3>free-api</h3>
+          <p>A public, curated directory of free-to-use APIs — built to make discovery and integration faster for other developers. I maintain the listings and the underlying repo structure.</p>
+          <div class="work-meta">
+            <span>Python</span>
+            <span>GitHub</span>
+            <span>Open source</span>
+          </div>
+          <a href="https://github.com/" class="work-link" target="_blank" rel="noopener">
+            View repository
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H5M10 4V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
 
-    <script>
-        // 1. Split Main Title into Interactive Characters
-        const titleEl = document.getElementById('interactiveTitle');
-        const text = titleEl.textContent;
-        titleEl.textContent = '';
+      <article class="work-card reveal" data-search="google cloud platform gcp api integrations backend">
+        <div class="work-card-media">
+          <svg class="work-mesh" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="meshB" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="var(--mesh-b-1)"/>
+                <stop offset="100%" stop-color="var(--mesh-b-2)"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#meshB)"/>
+            <g opacity="0.45" stroke="var(--mesh-line)" stroke-width="1">
+              <path d="M0 90 L400 60" /><path d="M0 170 L400 140" /><path d="M0 250 L400 220" />
+            </g>
+            <rect x="150" y="100" width="100" height="100" rx="10" fill="none" stroke="var(--mesh-accent)" stroke-width="1.5" transform="rotate(12 200 150)"/>
+          </svg>
+        </div>
+        <div class="work-card-body">
+          <span class="work-tag">Backend</span>
+          <h3>GCP API integrations</h3>
+          <p>Designed and connected backend services on Google Cloud Platform, handling authentication, data flow, and integration between internal tools and external APIs.</p>
+          <div class="work-meta">
+            <span>Google Cloud</span>
+            <span>Python</span>
+          </div>
+        </div>
+      </article>
 
-        [...text].forEach(char => {
-            const span = document.createElement('span');
-            span.className = 'char';
-            span.textContent = char === ' ' ? '\u00A0' : char;
-            titleEl.appendChild(span);
-        });
+      <article class="work-card reveal" data-search="burp suite security testing web vulnerability penetration">
+        <div class="work-card-media">
+          <svg class="work-mesh" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="meshC" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--mesh-c-1)"/>
+                <stop offset="100%" stop-color="var(--mesh-c-2)"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#meshC)"/>
+            <g opacity="0.5" stroke="var(--mesh-line)" stroke-width="1">
+              <path d="M40 0 L40 300" /><path d="M140 0 L140 300" /><path d="M240 0 L240 300" /><path d="M340 0 L340 300" />
+            </g>
+            <path d="M100 220 L180 90 L260 220 Z" fill="none" stroke="var(--mesh-accent)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="work-card-body">
+          <span class="work-tag">Security</span>
+          <h3>Web vulnerability testing</h3>
+          <p>Used Burp Suite to test web applications for common vulnerabilities — inspecting requests, probing auth flows, and documenting findings.</p>
+          <div class="work-meta">
+            <span>Burp Suite</span>
+            <span>Security</span>
+          </div>
+        </div>
+      </article>
 
-        // 2. Interactive Mouse Reaction on Title Characters (Magnetic Liquid + CMYK Shift)
-        document.querySelectorAll('.char').forEach(char => {
-            char.addEventListener('mousemove', (e) => {
-                const rect = char.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
+      <article class="work-card reveal" data-search="tryhackme cybersecurity training labs learning">
+        <div class="work-card-media">
+          <svg class="work-mesh" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="meshD" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--mesh-a-2)"/>
+                <stop offset="100%" stop-color="var(--mesh-b-1)"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#meshD)"/>
+            <g opacity="0.45" stroke="var(--mesh-line)" stroke-width="1">
+              <circle cx="200" cy="150" r="40"/><circle cx="200" cy="150" r="80"/><circle cx="200" cy="150" r="120"/>
+            </g>
+          </svg>
+        </div>
+        <div class="work-card-body">
+          <span class="work-tag">Training</span>
+          <h3>TryHackMe cybersecurity labs</h3>
+          <p>Ongoing hands-on training across networking, web exploitation, and system security through guided labs and practical challenges.</p>
+          <div class="work-meta">
+            <span>TryHackMe</span>
+            <span>Security</span>
+          </div>
+        </div>
+      </article>
 
-                const dist = Math.hypot(x, y);
-                const maxDist = 40;
-                const force = Math.max(0, (maxDist - dist) / maxDist);
+      <article class="work-card reveal" data-search="replit github development environments workflow">
+        <div class="work-card-media">
+          <svg class="work-mesh" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="meshE" x1="0" y1="0" x2="1" y2="0.3">
+                <stop offset="0%" stop-color="var(--mesh-b-2)"/>
+                <stop offset="100%" stop-color="var(--mesh-c-1)"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="300" fill="url(#meshE)"/>
+            <g opacity="0.5" stroke="var(--mesh-line)" stroke-width="1">
+              <path d="M0 50 L400 50" /><path d="M0 150 L400 150" /><path d="M0 250 L400 250" />
+            </g>
+            <rect x="130" y="110" width="140" height="80" rx="8" fill="none" stroke="var(--mesh-accent)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="work-card-body">
+          <span class="work-tag">Tooling</span>
+          <h3>Dev environments</h3>
+          <p>Manage development workflows across Replit and GitHub — from quick prototyping to version-controlled, deployable projects.</p>
+          <div class="work-meta">
+            <span>Replit</span>
+            <span>GitHub</span>
+          </div>
+        </div>
+      </article>
 
-                // Dynamic Risograph Split Offsets based on Mouse Vector
-                const shiftC_X = -3 - (x * 0.45);
-                const shiftC_Y = -2 - (y * 0.45);
-                
-                const shiftM_X = 3 + (x * 0.45);
-                const shiftM_Y = 2 + (y * 0.45);
+    </div>
+  </section>
 
-                const shiftY_X = (x * 0.3);
-                const shiftY_Y = 4 + (y * 0.3);
+  <section class="about" id="about">
+    <div class="about-inner">
+      <p class="eyebrow reveal">About</p>
+      <h2 class="reveal">Technical and creative, at the same time.</h2>
+      <p class="about-text reveal">I work across interactive installations, mobile development, and browser-based applications — writing most of it in Python. My focus splits between building things that connect well, like API integrations, and testing things that need to hold up, like web application security.</p>
+      <p class="about-text reveal">Outside of client and personal projects, I maintain <strong>free-api</strong>, an open-source directory of free APIs, and keep sharpening security fundamentals through TryHackMe.</p>
+    </div>
+  </section>
 
-                char.style.transform = `translate3d(${x * 0.35}px, ${y * 0.35}px, 0) scale(${1 + force * 0.25}) rotate(${x * 0.2}deg)`;
-                char.style.textShadow = `
-                    ${shiftC_X}px ${shiftC_Y}px 0px var(--cmyk-c),
-                    ${shiftM_X}px ${shiftM_Y}px 0px var(--cmyk-m),
-                    ${shiftY_X}px ${shiftY_Y}px 0px var(--cmyk-y)
-                `;
-            });
+  <section class="skills" id="skills">
+    <div class="section-head">
+      <p class="eyebrow reveal">Skills</p>
+      <h2 class="reveal">What I work with</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item reveal" data-search="python programming language">
+        <span class="skill-index">01</span>
+        <h3>Python</h3>
+        <p>Primary language across backend, tooling, and automation work.</p>
+      </div>
+      <div class="skill-item reveal" data-search="google cloud platform apis backend">
+        <span class="skill-index">02</span>
+        <h3>Google Cloud Platform</h3>
+        <p>API integrations, backend services, cloud-based architecture.</p>
+      </div>
+      <div class="skill-item reveal" data-search="burp suite web security testing">
+        <span class="skill-index">03</span>
+        <h3>Burp Suite</h3>
+        <p>Web application vulnerability testing and traffic inspection.</p>
+      </div>
+      <div class="skill-item reveal" data-search="tryhackme security training">
+        <span class="skill-index">04</span>
+        <h3>TryHackMe</h3>
+        <p>Ongoing cybersecurity training across practical, guided labs.</p>
+      </div>
+      <div class="skill-item reveal" data-search="replit github version control">
+        <span class="skill-index">05</span>
+        <h3>Replit &amp; GitHub</h3>
+        <p>Development environments, version control, and deployment.</p>
+      </div>
+      <div class="skill-item reveal" data-search="interactive installations mobile browser applications">
+        <span class="skill-index">06</span>
+        <h3>Interactive builds</h3>
+        <p>Installations, mobile apps, and browser-based experiences.</p>
+      </div>
+    </div>
+  </section>
 
-            char.addEventListener('mouseleave', () => {
-                char.style.transform = '';
-                char.style.textShadow = '';
-            });
-        });
+  <section class="faq" id="faq">
+    <div class="section-head">
+      <p class="eyebrow reveal">FAQ</p>
+      <h2 class="reveal">Good to know</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>What kind of projects do you take on?</span>
+          <svg class="faq-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Mostly work that sits between backend and interactivity — API integrations, browser-based tools, and security testing for web applications. I'm equally comfortable scoping something from scratch or auditing an existing build.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you work with teams or solo?</span>
+          <svg class="faq-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Both. I maintain open-source projects independently and I'm also glad to slot into an existing team, especially for integration or security-focused work.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>What's your typical turnaround?</span>
+          <svg class="faq-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>Depends on scope. Get in touch with details on what you need and I'll give you a realistic estimate rather than a generic one.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>How can I see your code?</span>
+          <svg class="faq-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-answer">
+          <p>The free-api repository is public on GitHub — linked in the work section above. It's the best current sample of how I structure and maintain a project.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // 3. Interactive Mouse Reaction on Headings & Subtext (.reactive-text)
-        document.querySelectorAll('.reactive-text').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <p class="eyebrow reveal">Contact</p>
+      <h2 class="reveal">Let's talk about what you're building.</h2>
+      <p class="contact-sub reveal">Fill in the form or copy the email directly. I read everything.</p>
 
-                const normX = (e.clientX - centerX) / (rect.width / 2);
-                const normY = (e.clientY - centerY) / (rect.height / 2);
+      <div class="contact-grid">
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            <span class="form-error" data-for="name">Enter your name.</span>
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <span class="form-error" data-for="email">Enter a valid email address.</span>
+          </div>
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <span class="form-error" data-for="message">Tell me a bit about the project.</span>
+          </div>
+          <button type="submit" class="btn btn-solid btn-full">Send message</button>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
 
-                const shiftC_X = -3 - normX * 8;
-                const shiftC_Y = -2 - normY * 8;
+        <div class="contact-direct reveal">
+          <div class="contact-direct-item">
+            <span>Email</span>
+            <div class="copy-row">
+              <code id="emailText">saad@example.com</code>
+              <button class="icon-btn copy-btn" data-copy="saad@example.com" aria-label="Copy email address">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 9.5V2.5C2.5 2 2.9 1.5 3.5 1.5H9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="contact-direct-item">
+            <span>GitHub</span>
+            <div class="copy-row">
+              <code>github.com/saadkashif</code>
+              <button class="icon-btn copy-btn" data-copy="github.com/saadkashif" aria-label="Copy GitHub link">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M2.5 9.5V2.5C2.5 2 2.9 1.5 3.5 1.5H9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                const shiftM_X = 3 + normX * 8;
-                const shiftM_Y = 2 + normY * 8;
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Saad Kashif.</p>
+      <p id="lastUpdated">Last updated —</p>
+    </div>
+  </footer>
 
-                const shiftY_X = normX * 5;
-                const shiftY_Y = 4 + normY * 5;
+</main>
 
-                el.style.transform = `perspective(600px) rotateX(${-normY * 12}deg) rotateY(${normX * 12}deg) translateZ(8px)`;
-                el.style.textShadow = `
-                    ${shiftC_X}px ${shiftC_Y}px 0px var(--cmyk-c),
-                    ${shiftM_X}px ${shiftM_Y}px 0px var(--cmyk-m),
-                    ${shiftY_X}px ${shiftY_Y}px 0px var(--cmyk-y)
-                `;
-            });
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h3 id="modalTitle">Message sent</h3>
+    <p>Thanks for reaching out. I'll get back to you soon.</p>
+    <button class="btn btn-solid" id="modalClose">Close</button>
+  </div>
+</div>
 
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = '';
-                el.style.textShadow = '';
-            });
-        });
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 9L8 4L13 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 
-        // 4. Liquid Background Distortion on Global Mouse Movement
-        const turbulence = document.getElementById('turbulence');
-        window.addEventListener('mousemove', (e) => {
-            const xRatio = e.clientX / window.innerWidth;
-            const yRatio = e.clientY / window.innerHeight;
+<a href="#contact" class="floating-contact" aria-label="Jump to contact form">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5L9 10L16 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="4" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+</a>
 
-            const newFreqX = 0.015 + (xRatio * 0.02);
-            const newFreqY = 0.01 + (yRatio * 0.02);
-
-            turbulence.setAttribute('baseFrequency', `${newFreqX} ${newFreqY}`);
-        });
-    </script>
+<script src="js/main.js"></script>
 </body>
 </html>
